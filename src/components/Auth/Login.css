@@ -1,5 +1,10 @@
+.login-content{
+    display: flex;
+    align-items: center;
+}
+
 .login-container {
-  max-width: 400px;
+  max-width: 480px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
