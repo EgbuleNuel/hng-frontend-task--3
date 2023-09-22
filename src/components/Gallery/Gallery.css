@@ -1,0 +1,10 @@
+#image-gallery {
+  height: 100vh;
+  padding: 5%;
+}
+
+input {
+  border: 2px solid #000;
+  width: 20vw;
+  padding: 10px;
+}

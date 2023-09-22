@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
+import "./ImageCard.css";
 
-const ImageCard = ({ image, tags, onTagClick }) => {
+const ImageCard = ({ image, tags }) => {
   const imageRef = useRef(null);
 
   return (
@@ -8,9 +9,7 @@ const ImageCard = ({ image, tags, onTagClick }) => {
       <img src={`/images/${image}`} alt={image} />
       <div className="tags">
         {tags.map((tag, index) => (
-          <span key={index} onClick={() => onTagClick(tag)}>
-            {tag}
-          </span>
+          <span key={index}>{tag}</span>
         ))}
       </div>
     </div>

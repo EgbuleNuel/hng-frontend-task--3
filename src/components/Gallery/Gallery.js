@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ImageCard from "./ImageCard";
 import { ThreeDots } from "react-loader-spinner";
 import Sortable from "sortablejs";
+import "./Gallery.css";
 
 const Gallery = () => {
   const initialImages = [
@@ -20,7 +21,6 @@ const Gallery = () => {
   ];
 
   const [images, setImages] = useState(initialImages);
-  const [selectedTag, setSelectedTag] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -29,10 +29,6 @@ const Gallery = () => {
       setLoading(false);
     }, 2000);
   }, []);
-
-  const handleTagClick = (tag) => {
-    setSelectedTag(tag === selectedTag ? null : tag);
-  };
 
   const handleImageReorder = (draggedImageIndex, droppedImageIndex) => {
     const updatedImages = [...images];
@@ -53,7 +49,7 @@ const Gallery = () => {
     const galleryContainer = document.getElementById("image-gallery");
     const sortable = new Sortable(galleryContainer, {
       group: "image-card",
-      animation: 10,
+      animation: 150,
       onEnd: (e) => {
         // Handle image reordering here
         handleImageReorder(e.oldIndex, e.newIndex);
@@ -65,6 +61,11 @@ const Gallery = () => {
     };
   }, [handleImageReorder]);
 
+  const rows = [];
+  for (let i = 0; i < filteredImages.length; i += 4) {
+    rows.push(filteredImages.slice(i, i + 4));
+  }
+
   return (
     <div className="gallery" id="image-gallery">
       {loading ? (
@@ -75,7 +76,7 @@ const Gallery = () => {
         <>
           <input
             type="text"
-            placeholder="Search by tag"
+            placeholder="Filter by tag"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -83,11 +84,7 @@ const Gallery = () => {
           <div className="image-grid">
             {filteredImages.map((imageData, index) => (
               <div key={index} id="image-card" data-id={index}>
-                <ImageCard
-                  image={imageData.image}
-                  tags={imageData.tags}
-                  onTagClick={handleTagClick}
-                />
+                <ImageCard image={imageData.image} tags={imageData.tags} />
               </div>
             ))}
           </div>
